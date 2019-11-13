@@ -152,7 +152,8 @@ class Pelota(pygame.sprite.Sprite):
 					[ self.vy ]
 				]
 			)
-		self.Xt = (np.dot(self.F, self.Xt) + self.G) + W
+		# self.Xt = (np.dot(self.F, self.Xt) + self.G) + W
+		self.Xt = ((self.F @ self.Xt) + self.G) + W
 		# self.pretty_print(W)
 		self.pretty_print(self.Xt)
 		# time.sleep(0.3)
