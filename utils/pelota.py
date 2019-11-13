@@ -155,6 +155,6 @@ class Pelota(pygame.sprite.Sprite):
 		self.Xt = (np.dot(self.F, self.Xt) + self.G) + W
 		# self.pretty_print(W)
 		self.pretty_print(self.Xt)
-		time.sleep(0.3)
+		# time.sleep(0.3)
 		self.iteracion += 1
 		return self.Xt
