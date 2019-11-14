@@ -27,10 +27,6 @@ class Pelota(pygame.sprite.Sprite):
 		self.y = y
 		self.vx = vx
 		self.vy = vy
-
-		# Choque elastico
-		self.masa = 0.1  # KG
-		self.velocidad_inicial = 0
 		self.sigma_p = sigma_p
 		self.sigma_v = sigma_v
 		self.sigma_x = np.array(
@@ -153,9 +149,8 @@ class Pelota(pygame.sprite.Sprite):
 				]
 			)
 		# self.Xt = (np.dot(self.F, self.Xt) + self.G) + W
-		self.Xt = ((self.F @ self.Xt) + self.G) + W
+		self.Xt = (self.F @ self.Xt) + self.G + W
 		# self.pretty_print(W)
 		self.pretty_print(self.Xt)
-		# time.sleep(0.3)
 		self.iteracion += 1
 		return self.Xt
