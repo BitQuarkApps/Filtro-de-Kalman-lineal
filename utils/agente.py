@@ -1,4 +1,5 @@
 from numpy.linalg import inv  # Inversa
+from tabulate import tabulate
 import numpy as np
 import pygame
 
@@ -54,11 +55,23 @@ class Jugador(pygame.sprite.Sprite):
 
 		self.Xt_dado_t_menos_1 = None
 
+	def pretty_print(self, matrix, header='Vector'):
+		headers = [header]
+		table = tabulate(matrix, headers, tablefmt="fancy_grid")
+		print(table)
+		print('\n\n')
+	
 	def predecir_movimiento(self, sigma_p, sigma_v, F, Xt):
-		V = np.array(
+		V0 = np.array(
 			[
-				[np.random.normal(0, sigma_v)],  # X
-				[np.random.normal(0, sigma_v)]  # Y
+				[np.random.normal(0, sigma_p)],  # X
+				[np.random.normal(0, sigma_p)]  # Y
+			]
+		)
+		V1 = np.array(
+			[
+				[np.random.normal(0, sigma_p)],  # X
+				[np.random.normal(0, sigma_p)]  # Y
 			]
 		)
 
@@ -70,50 +83,18 @@ class Jugador(pygame.sprite.Sprite):
 		)
 		R = np.dot(Gz, np.transpose(Gz))
 
-		# Predicción
-		# X t|0 = F * X 0|0
-		if self.Xt_dado_t_menos_1 is None:
-			self.Xt_dado_t_menos_1 = Xt
-		predicha = np.dot(F, self.Xt_dado_t_menos_1)
 		# Observación
 		# Zt = H * Xt + V
-		Z = np.dot(self.H, self.Xt_dado_t_menos_1) + V  # XZ
+		Zt0 = np.dot(self.H, Xt) + V0
+		Zt1 = np.dot(self.H, Xt) + V1
 
-		# Confiabilidad
-		# P t|0 = F * P 0|0 + F^t + Q
-		confiabilidad = np.dot(F, np.dot(self.P, np.transpose(F))) + self.Q
 
-		# Observación predicha
-		# Fórmula de la ganancia K
-		K = confiabilidad @ np.transpose(self.H) @ inv(
-			self.H @ confiabilidad @ np.transpose(self.H) + R)
+		"""
+		t | t-1 SIGNIFICA => Predicción o predicha
+		t | t   SIGNIFICA => Estimada
+		"""
 
-		# Cálculo de la innovación Y
-		Y = Z - np.dot(self.H, predicha)
-		# Filtrada
-		# X t|t = X t|t-1 + K * Yt
-		filtrada = predicha + np.dot(K, Y)
-		Pt_t = np.dot(
-			confiabilidad,
-			(self.I - np.dot(K, self.H))
-		)
-
-		# Actualización
-		V_z0 = np.array(
-			[
-				[np.random.normal(0, sigma_v)],  # X
-				[np.random.normal(0, sigma_v)]  # Y
-			]
-		)
-		V_z1 = np.array(
-			[
-				[np.random.normal(0, sigma_v)],  # X
-				[np.random.normal(0, sigma_v)]  # Y
-			]
-		)
-		z0 = np.dot(self.H, Xt) + V_z0  # Z0
-		z1 = np.dot(self.H, Xt) + V_z1  # Z1
-		wt = np.array(
+		Wt = np.array(
 			[
 				[np.random.normal(0, sigma_p)],
 				[np.random.normal(0, sigma_p)],
@@ -121,12 +102,20 @@ class Jugador(pygame.sprite.Sprite):
 				[np.random.normal(0, sigma_v)]
 			]
 		)
-		self.Xt_dado_t_menos_1 = np.array(
+		"""
+		X estimada
+		X t|t = [
+					[ Zt1.x ],
+					[ Zt1.y ],
+					[ Zt1.x - Zt0.x / delta_t ],
+					[ Zt1.y - Zt0.y / delta_t ],
+				] + Wt
+		"""
+		X_estimada = np.array(
 			[
-				[z1[0][0]],
-				[z1[1][0]],
-				[(z1[0][0]-z0[0][0])/1],
-				[(z1[1][0]-z0[1][0])/1],
+				[ Zt1[0][0] ]
 			]
-		) + wt
-		return filtrada[0][0], filtrada[1][0]
+		)
+		self.pretty_print(Zt0, header='Z[0]')
+		self.pretty_print(Zt1, header='Z[1]')
+		return 0, 0 # X, Y

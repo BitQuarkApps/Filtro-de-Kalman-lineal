@@ -79,13 +79,9 @@ class Pelota(pygame.sprite.Sprite):
 		)
 
 		self.iteracion = 1
-	def update(self):
-		a = 0
-		# self.rect.x += self.velocity[0]
-		# self.rect.y += self.velocity[1]
 
 	def choca_con(self, sprite):
-		return self.rect.colliderect(sprite.rect)
+		return self.image.get_rect().colliderect(sprite.rect)
 
 	def rebote(self):
 		print('rebote')
@@ -151,6 +147,6 @@ class Pelota(pygame.sprite.Sprite):
 		# self.Xt = (np.dot(self.F, self.Xt) + self.G) + W
 		self.Xt = (self.F @ self.Xt) + self.G + W
 		# self.pretty_print(W)
-		self.pretty_print(self.Xt)
+		# self.pretty_print(self.Xt)
 		self.iteracion += 1
 		return self.Xt

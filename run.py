@@ -29,8 +29,8 @@ if __name__ == "__main__":
 	vy = 3
 
 	delta_t = 1
-	sigma_posicion = 0.0002/0.3
-	sigma_velocidad = 0.0003/3
+	sigma_posicion = 0.2/0.3
+	sigma_velocidad = 0.3/3
 
 	jugador1 = Jugador(WHITE, 10, 20, sigma_posicion, sigma_velocidad)
 	jugador2 = Jugador(WHITE, 10, 20, sigma_posicion, sigma_velocidad)
@@ -77,20 +77,8 @@ if __name__ == "__main__":
 			xt_pelota = pelota.calcular_Xt(jugador2)
 		else:
 			xt_pelota = pelota.calcular_Xt(jugador1)
-		# pelota.rect.x = xt_pelota[0][0]
-		# pelota.rect.y = xt_pelota[1][0]
 		pelota.rect.x += xt_pelota[2][0]
 		pelota.rect.y += xt_pelota[3][0]
-		
-
-		# if pelota.rect.x>=590:
-		# 	pelota.velocity[0] = -pelota.velocity[0]
-		# if pelota.rect.x<=0:
-		# 	pelota.velocity[0] = -pelota.velocity[0]
-		# if pelota.rect.y>790:
-		# 	pelota.velocity[1] = -pelota.velocity[1]
-		# if pelota.rect.y<0:
-		# 	pelota.velocity[1] = -pelota.velocity[1] 
 
 		# 60 FPS
 		clock.tick(60)
@@ -101,11 +89,13 @@ if __name__ == "__main__":
 		"""
 		if turno_jugador_1:
 			x, y = jugador2.predecir_movimiento(
-				sigma_posicion, sigma_velocidad, pelota.F, pelota.Xt)
+				sigma_posicion, sigma_velocidad, pelota.F, xt_pelota
+			)
 			jugador2.rect.y = y
 		else:
 			x, y = jugador1.predecir_movimiento(
-				sigma_posicion, sigma_velocidad, pelota.F, pelota.Xt)
+				sigma_posicion, sigma_velocidad, pelota.F, xt_pelota
+			)
 			jugador1.rect.y = y
 		if turno_jugador_1:
 			if pelota.choca_con(jugador2):
