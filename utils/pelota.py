@@ -3,8 +3,9 @@ import numpy as np
 import pygame
 import time
 BLACK = (0, 0, 0)
-WHITE = (255,255,255)
+WHITE = (255, 255, 255)
 RED = (255, 0, 0)
+
 
 class Pelota(pygame.sprite.Sprite):
 	def __init__(self, x, y, vx, vy, delta_t, sigma_p, sigma_v, color, width, height):
@@ -108,44 +109,44 @@ class Pelota(pygame.sprite.Sprite):
 				[0]
 			]
 		)
-		if self.rect.x>=590:
+		if self.rect.x >= 590:
 			self.G = np.array(
 				[
-					[ 0 ],
-					[ 0 ],
-					[ -self.vx ],
-					[ 0 ]
+					[0],
+					[0],
+					[-self.vx],
+					[0]
 				]
 			)
-		elif self.rect.x<=0:
+		elif self.rect.x <= 0:
 			self.G = np.array(
 				[
-					[ 0 ],
-					[ 0 ],
-					[ self.vx ],
-					[ 0 ]
+					[0],
+					[0],
+					[self.vx],
+					[0]
 				]
 			)
-		if self.rect.y>=790:
+		if self.rect.y >= 790:
 			self.G = np.array(
 				[
-					[ 0 ],
-					[ 0 ],
-					[ 0 ],
-					[ -self.vy ]
+					[0],
+					[0],
+					[0],
+					[-self.vy]
 				]
 			)
-		elif self.rect.y<=0:
+		elif self.rect.y <= 0:
 			self.G = np.array(
 				[
-					[ 0 ],
-					[ 0 ],
-					[ 0 ],
-					[ self.vy ]
+					[0],
+					[0],
+					[0],
+					[self.vy]
 				]
 			)
-		# self.Xt = (np.dot(self.F, self.Xt) + self.G) + W
-		self.Xt = (self.F @ self.Xt) + self.G + W
+		self.Xt = np.dot(self.F, self.Xt) + self.G + W
+		# self.Xt = (self.F @ self.Xt) + self.G + W
 		# self.pretty_print(W)
 		# self.pretty_print(self.Xt)
 		self.iteracion += 1

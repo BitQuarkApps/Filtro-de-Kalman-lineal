@@ -22,11 +22,11 @@ running = True
 
 if __name__ == "__main__":
 
-	x = 10
+	x = 20
 	y = 200
 
-	vx = 3
-	vy = 3
+	vx = 2
+	vy = 2
 
 	delta_t = 1
 	sigma_posicion = 0.2/0.3
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 	jugador1 = Jugador(WHITE, 10, 20, sigma_posicion, sigma_velocidad)
 	jugador2 = Jugador(WHITE, 10, 20, sigma_posicion, sigma_velocidad)
 	pelota = Pelota(x, y, vx, vy, delta_t, sigma_posicion,
-					sigma_velocidad, WHITE, 10, 10)
+                 sigma_velocidad, WHITE, 10, 10)
 
 	"""
 	Iniciar animaciones
