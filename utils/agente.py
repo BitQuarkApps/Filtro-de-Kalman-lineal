@@ -149,4 +149,4 @@ class Jugador(pygame.sprite.Sprite):
 		)
 		self.pretty_print(self.Xt_t)
 
-		return 0, 0  # X, Y
+		return self.Xt_t[0][0], self.Xt_t[1][0]

@@ -1,10 +1,10 @@
 # Diseño de Sistemas Inteligentes
 # Corte 2
 # Universidad Politécnica de Chiapas
-
 # Creado por Luis Fernando Hernández Morales
-from utils.pelota import Pelota
 from utils.agente import Jugador
+from utils.pelota import Pelota
+import matplotlib.pyplot as plt
 import numpy as np
 import pygame
 import time
@@ -19,6 +19,13 @@ RED = (255, 0, 0)
 (width, height) = (600, 800)  # Dimensiones de la ventana de pygame
 running = True
 
+"""
+Arreglos para las graficas
+"""
+REAL_X = []
+REAL_Y = []
+PREDICHA_X = []
+PREDICHA_Y = []
 
 if __name__ == "__main__":
 
@@ -80,6 +87,9 @@ if __name__ == "__main__":
 		pelota.rect.x += xt_pelota[2][0]
 		pelota.rect.y += xt_pelota[3][0]
 
+		REAL_X.append(xt_pelota[0][0])
+		REAL_Y.append(xt_pelota[1][0])
+
 		# 60 FPS
 		clock.tick(60)
 		"""
@@ -92,6 +102,9 @@ if __name__ == "__main__":
 				sigma_posicion, sigma_velocidad, pelota.F, xt_pelota
 			)
 			jugador2.rect.y = y
+
+			PREDICHA_X.append(x)
+			PREDICHA_Y.append(y)
 		else:
 			x, y = jugador1.predecir_movimiento(
 				sigma_posicion, sigma_velocidad, pelota.F, xt_pelota
@@ -111,4 +124,12 @@ if __name__ == "__main__":
 		pygame.display.flip()
 
 	# Salir cuando todo termine
+	"""
+	pintar las graficas
+	"""
+	plt.plot(REAL_X, REAL_Y, "-", label="Real")
+	plt.plot(PREDICHA_X, PREDICHA_Y, ":", label="Predicha")
+	plt.title('Filtro de Kalman lineal')
+	plt.legend()
+	plt.show()
 	pygame.quit()
