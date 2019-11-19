@@ -3,6 +3,7 @@ from tabulate import tabulate
 import numpy as np
 import pygame
 import copy
+import math
 
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -128,6 +129,7 @@ class Jugador(pygame.sprite.Sprite):
             # X t | t-1 = F * Xt-1|t-1
             self.Xt_t_menos_1 = np.dot(F, x0)
         else:
+            # X t|t-1 = F * X t-1|t-1
             self.Xt_t_menos_1 = np.dot(F, self.Xt_t_menos_1)
 
         if self.Pt_t_menos_1 is None:
@@ -149,5 +151,27 @@ class Jugador(pygame.sprite.Sprite):
             self.I - np.dot(K, self.H),
             self.Pt_t_menos_1
         )
-        self.pretty_print(self.Xt_t)
+        # self.pretty_print(self.Pt_t)
+
+        # Fórmula de la pendiente
+        Y2 = self.Xt_t[1][0]
+        Y1 = self.Xt_t_menos_1[1][0]
+
+        X2 = self.Xt_t[0][0]
+        X1 = self.Xt_t_menos_1[0][0]
+
+        print('Pendiente:')
+        print(Y2)
+        print(Y1)
+        print(X2)
+        print(X1)
+
+        pendiente = (Y2-Y1)/(X2-X1)
+        print('Resultado:')
+        print(pendiente)
+        angulo_inclinacion = math.degrees(math.atan(pendiente))
+        print('Angulo:')
+        print(angulo_inclinacion)
+        # Si `pendiente` es > 0 quiere decir que el vector va hacia arriba
+        # Si `pendiente` es < 0 quiere decir que el vector va hacia abajo
         return self.Xt_t[0][0], self.Xt_t[1][0]
