@@ -32,12 +32,12 @@ if __name__ == "__main__":
     x = 20
     y = 200
 
-    vx = 2
-    vy = 2
+    vx = 1
+    vy = 1
 
     delta_t = 1
-    sigma_posicion = 0.05
-    sigma_velocidad = 0.03
+    sigma_posicion = 0.08
+    sigma_velocidad = 0.05
 
     jugador1 = Jugador(WHITE, 10, 20, sigma_posicion, sigma_velocidad)
     jugador2 = Jugador(WHITE, 10, 20, sigma_posicion, sigma_velocidad)
@@ -77,7 +77,7 @@ if __name__ == "__main__":
                 running = False
 
         # Actualizar la ventana
-        all_sprites_list.update()
+        # all_sprites_list.update()
 
         # Calcular Xt
         if turno_jugador_1:
@@ -119,9 +119,9 @@ if __name__ == "__main__":
                 print('Chocaaaa con 1')
                 turno_jugador_1 = not turno_jugador_1
         iteraciones += 1
-        screen.fill(BLACK)
-        all_sprites_list.draw(screen)
-        pygame.display.flip()
+        # screen.fill(BLACK)
+        # all_sprites_list.draw(screen)
+        # pygame.display.flip()
 
     # Salir cuando todo termine
     """

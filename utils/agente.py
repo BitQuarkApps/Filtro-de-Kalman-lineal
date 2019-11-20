@@ -44,12 +44,12 @@ class Jugador(pygame.sprite.Sprite):
         )  # Matriz de identidad
         self.Q = np.array(
             [
-                [sigma_P, 0, 0, 0],
-                [0, sigma_P, 0, 0],
-                [0, 0, sigma_V, 0],
-                [0, 0, 0, sigma_V]
+                [sigma_P**2, 0, 0, 0],
+                [0, sigma_P**2, 0, 0],
+                [0, 0, sigma_V**2, 0],
+                [0, 0, 0, sigma_V**2]
             ]
-        )
+        )  # SIGMA AL CUADRADO
 
         self.P = np.array(
             [
@@ -97,8 +97,8 @@ class Jugador(pygame.sprite.Sprite):
 
         Gz = np.array(
             [
-                [np.random.normal(0, sigma_p)],
-                [np.random.normal(0, sigma_p)]
+                [np.random.normal(0, sigma_p**2)],
+                [np.random.normal(0, sigma_p**2)]
             ]
         )
         R = np.dot(Gz, np.transpose(Gz))
