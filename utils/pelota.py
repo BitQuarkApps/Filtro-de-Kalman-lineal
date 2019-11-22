@@ -83,7 +83,7 @@ class Pelota(pygame.sprite.Sprite):
         self.iteracion = 1
 
     def choca_con(self, sprite):
-        return self.image.get_rect().colliderect(sprite.rect)
+        return self.rect.colliderect(sprite.rect)
 
     def rebote(self):
         print('rebote')
