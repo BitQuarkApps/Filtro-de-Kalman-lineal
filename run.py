@@ -1,7 +1,7 @@
 # Diseño de Sistemas Inteligentes
 # Corte 2
 # Universidad Politécnica de Chiapas
-# Creado por Luis Fernando Hernández Morales
+# Creado por Luis Fernando Hernández Morales y David Pérez Sánchez
 from utils.agente import Jugador
 from utils.pelota import Pelota
 import matplotlib.pyplot as plt
