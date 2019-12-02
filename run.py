@@ -39,8 +39,8 @@ if __name__ == "__main__":
 	vy = 3
 
 	delta_t = 1
-	sigma_posicion = 0.3
-	sigma_velocidad = 0.2
+	sigma_posicion = 0.003
+	sigma_velocidad = 0.002
 
 	jugador1 = Jugador(WHITE, 10, 20, sigma_posicion, sigma_velocidad)
 	jugador2 = Jugador(WHITE, 10, 20, sigma_posicion, sigma_velocidad)
